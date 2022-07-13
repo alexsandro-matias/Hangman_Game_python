@@ -1,13 +1,5 @@
-# -*- coding: utf-8 -*-
-
-
-# Hangman Game (Jogo da Forca)
-# Programação Orientada a Objetos
-
-# Import
 import random
 
-# Board (tabuleiro)
 board = ['''
 
 >>>>>>>>>>Hangman<<<<<<<<<<
@@ -86,6 +78,7 @@ class Hangman:
 
     def hide_word(self):
         quantidade_letras = len(self.word)
+        print(quantidade_letras * "_ ")
 
     def print_game_status(self):
         pass
