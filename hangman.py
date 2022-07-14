@@ -61,55 +61,62 @@ O   |
 =========''']
 
 
-class Hangman:
-
-    def __init__(self, word):
-        self.word = word
-
-    # Método para adivinhar a letra
-    def guess(self, letter):
-        pass
-
-    def hangman_over(self):
-        pass
-
-    def hangman_won(self):
-        pass
-
-    def hide_word(self):
-        quantidade_letras = len(self.word)
-        print(quantidade_letras * "_ ")
-
-    def print_game_status(self):
-        pass
-
-
-# Função para ler uma palavra de forma aleatória do banco de palavras
-def rand_word():
+def sorteio_palavra():
     with open("words.txt", "rt") as f:
         bank = f.readlines()
     return bank[random.randint(0, len(bank))].strip()
 
 
-# Função Main - Execução do Programa
-def main():
-    game = Hangman(rand_word())
+quantidade_erros = 0
+palavra = sorteio_palavra()
+quantidade_letras = len(palavra)
+maximo_erros = len(board)
+palavra_oculta = "_" * quantidade_letras
+letras_erradas = []
+letras_corretas = []
 
-    # Enquanto o jogo não tiver terminado, print do status, solicita uma letra e faz a leitura do caracter
+# Já que as strings são imutáveis,
+# se faz necessária a conversão das palavras para lista
+palavra = list(palavra)
+palavra_oculta = list(palavra_oculta)
 
-    # Verifica o status do jogo
-    game.print_game_status()
 
-    # De acordo com o status, imprime mensagem na tela para o usuário
-    if game.hangman_won():
-        print('\nParabéns! Você venceu!!')
+def hide_word():
+    print("Palavra:", palavra_oculta)
+
+
+def perdeu_jogo():
+    print('\nGame over! Você perdeu.')
+    print('A palavra era', str("".join(palavra)).upper())
+
+
+def ganhou_jogo():
+    print('\nParabens por ter acertado.', str("".join(palavra)).upper())
+
+
+while True:
+    print(board[quantidade_erros])
+    hide_word()
+    print("Letras erradas: ", letras_erradas)
+    print("Letras corretas: ", letras_corretas)
+    letra_digitada = input("Digite uma letra: ")
+
+    if letra_digitada in palavra:
+        letras_corretas.append(letra_digitada)
+
+        for indice, letra in enumerate(palavra):
+            if letra == letra_digitada:
+                palavra_oculta[indice] = letra
+
+        if palavra == palavra_oculta:
+            ganhou_jogo()
+            break
+
     else:
-        print('\nGame over! Você perdeu.')
-        print('A palavra era ' + game.word)
+        letras_erradas.append(letra_digitada)
+        quantidade_erros = quantidade_erros + 1
+        if quantidade_erros == maximo_erros:
+            perdeu_jogo()
+            break
 
-    print('\nFoi bom jogar com você! Agora vá estudar!\n')
-
-
-# Executa o programa
-if __name__ == "__main__":
-    main()
+print('Foi bom jogar com você! Agora vá estudar!\n')
