@@ -1,25 +1,18 @@
-palavra = "texto"
-quantidade_erros = 0
-quantidade_letras = len(palavra)
+palavra = "banana"
+palavra_oculta = "_" * len(palavra)
+letra_digitada = 'a'
 
-palavra_oculta = " _ " * quantidade_letras
-
-palavra_oculta = list(palavra_oculta)
 palavra = list(palavra)
-
-letra_digitada = 'e'
-
-if letra_digitada in palavra:
-    for letra in palavra:
-        if str(letra_digitada) == letra:
-            posicao = palavra_oculta.index(letra)
-            palavra_oculta[posicao] = letra
+palavra_oculta = list(palavra_oculta)
 
 
-else:
-    quantidade_erros += 1
+print(palavra_oculta)
 
-print(type(palavra_oculta))
 
-# for i in palavra:
-#     print(i)
+for indice, letra in enumerate(palavra):
+    if letra == letra_digitada:
+        palavra_oculta[indice] = letra
+    else:
+        print("Letra não está")
+
+print(palavra_oculta)
