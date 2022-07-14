@@ -1,3 +1,5 @@
+import os
+import platform
 import random
 
 board = ['''
@@ -67,6 +69,20 @@ def sorteio_palavra():
     return bank[random.randint(0, len(bank))].strip()
 
 
+def limpando_tela():
+    sistema = descobrindo_sistema_operacional()
+    if sistema == "Windows":
+        os.system("cls")
+    elif sistema == "Linux":
+        os.system("clear")
+    else:
+        print("Sistema Operacional não identificado")
+
+
+def descobrindo_sistema_operacional():
+    return platform.system()
+
+
 quantidade_erros = 0
 palavra = sorteio_palavra()
 quantidade_letras = len(palavra)
@@ -118,5 +134,6 @@ while True:
         if quantidade_erros == maximo_erros:
             perdeu_jogo()
             break
+    limpando_tela()
 
 print('Foi bom jogar com você! Agora vá estudar!\n')
